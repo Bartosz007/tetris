@@ -15,4 +15,7 @@ public class SETS_GAME {
     public static int BORDER = 2;
     public static Color FG = new Color(140,40,40);
     public static Color BG = new Color(40,40,40);
+
+    public static int DELAY = 20;
+    public static int FALL = 20;
 }

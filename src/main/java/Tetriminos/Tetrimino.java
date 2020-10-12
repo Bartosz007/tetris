@@ -24,8 +24,7 @@ public abstract class Tetrimino {
             if(b.getX() == SETS_GAME.MIN_X)
                 return;
 
-            if(b.getY()>-1
-                    && b.getX()/SETS_GAME.SIZE > 0
+            if(b.getX()/SETS_GAME.SIZE > 0
                 && play_board[(b.getX()/SETS_GAME.SIZE)-1][b.getY()/SETS_GAME.SIZE]!=null)
                 return;
 
@@ -42,8 +41,7 @@ public abstract class Tetrimino {
             if (b.getX() == SETS_GAME.MAX_X - SETS_GAME.SIZE)
                 return;
 
-            if(b.getY()>-1
-                    && b.getX()/SETS_GAME.SIZE < SETS_GAME.COLS
+            if(b.getX()/SETS_GAME.SIZE < SETS_GAME.COLS
                     && play_board[(b.getX()/SETS_GAME.SIZE)+1][b.getY()/SETS_GAME.SIZE]!=null)
                 return;
         }
@@ -58,12 +56,13 @@ public abstract class Tetrimino {
             if(b.getY()>SETS_GAME.MAX_Y-2*SETS_GAME.SIZE)
                 return true;
 
-            if(b.getY()>-1 &&  board_blocks[b.getX()/SETS_GAME.SIZE][b.getY()/SETS_GAME.SIZE + 1] != null)
+            if(board_blocks[b.getX()/SETS_GAME.SIZE][b.getY()/SETS_GAME.SIZE + 1] != null)
                 return true;
         }
 
         return false;
     }
+
     public Block[] getBlocks() {
         return blocks;
     }

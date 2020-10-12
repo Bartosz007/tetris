@@ -10,25 +10,24 @@ import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.Timer;
 
+
 public class Tetris extends JPanel {
 
 
 
     private final Block[][] blocks;
     private Tetrimino tetrimino;
-
+    private Timer timer;
+    private int counter;
     public Tetris() {
-        final Timer timer;
-        final int delay = 400;
 
         blocks = new Block[SETS_GAME.COLS][SETS_GAME.ROWS];
 
         tetrimino = nextTetrimino();
 
-
         addKeyListeners();
-
-        timer = new Timer(delay, e -> {
+        counter = 0;
+        timer = new Timer(SETS_GAME.DELAY, e -> {
 
             calculate();
             repaint();
@@ -39,18 +38,34 @@ public class Tetris extends JPanel {
 
 
     private void calculate(){
+
         if(tetrimino.isFelt(blocks)){
             for (Block block:tetrimino.getBlocks()) {
                // blocks.add(block);
 
                 blocks[block.getX()/SETS_GAME.SIZE][block.getY()/SETS_GAME.SIZE] = block;
-                check_lines();
+            }
+            check_lines();
+           // tetrimino = new Ttetrimino();
+            if(blocks[5][1]!=null || blocks[6][1]!=null) {
+                System.out.println("Koniec gry");
+                timer.stop();
             }
 
             tetrimino = nextTetrimino();
-        }
 
-        tetrimino.gravit();
+
+        }else{
+
+            if(counter > SETS_GAME.FALL){
+                tetrimino.gravit();
+                counter = 0;
+            }
+        }
+        counter ++;
+
+
+
 
       /*  for (Block block:blocks) {
             block.setY(block.getY()+SETS_GAME.SIZE);
@@ -123,23 +138,13 @@ public class Tetris extends JPanel {
         getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), KEY.LEFT);
         getInputMap(IFW).put(KeyStroke.getKeyStroke("DOWN"), KEY.DOWN);
         getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), KEY.RIGHT);
-
-        getInputMap(IFW).put(KeyStroke.getKeyStroke("released UP"),KEY.RUP);
-        getInputMap(IFW).put(KeyStroke.getKeyStroke("released LEFT"),KEY.RLEFT);
-        getInputMap(IFW).put(KeyStroke.getKeyStroke("released DOWN"),KEY.RDOWN);
-        getInputMap(IFW).put(KeyStroke.getKeyStroke("released RIGHT"),KEY.RRIGHT);
+        getInputMap(IFW).put(KeyStroke.getKeyStroke("SPACE"), KEY.SPACE);
 
         getActionMap().put(KEY.UP, pressed(KEY.UP));
         getActionMap().put(KEY.LEFT, pressed(KEY.LEFT));
         getActionMap().put(KEY.DOWN, pressed(KEY.DOWN));
         getActionMap().put(KEY.RIGHT, pressed(KEY.RIGHT));
-/*
-        getActionMap().put(KEY.RUP, released(KEY.UP));
-        getActionMap().put(KEY.RLEFT, released(KEY.LEFT));
-        getActionMap().put(KEY.RDOWN, released(KEY.DOWN));
-        getActionMap().put(KEY.RRIGHT, released(KEY.RIGHT));
-
- */
+        getActionMap().put(KEY.SPACE, pressed(KEY.SPACE));
 
     }
 
@@ -157,6 +162,17 @@ public class Tetris extends JPanel {
                 if(button==KEY.UP){
                     tetrimino.rotate();
                 }
+                if(button==KEY.DOWN){
+                    counter = counter + 50;
+                }
+
+                if(button==KEY.SPACE){
+                    System.out.println("fd");
+                    while (!tetrimino.isFelt(blocks)){
+                        tetrimino.gravit();
+                    }
+                }
+
                  /*
                 if(button==KEY.LEFT){
                     active_block.setX(active_block.getX()-SETS_GAME.SIZE);
@@ -200,10 +216,17 @@ public class Tetris extends JPanel {
                     blocks[k][j]=null;
 
 
-                for(int l =0;l<j;l++) { //grawitacja
+                for(int l = j;l>0;l--) { //grawitacja
                     for (int m = 0; m < SETS_GAME.COLS; m++) {
-                        if(blocks[m][l]!=null)
+                        blocks[m][l] = blocks[m][l-1];
+                        if(blocks[m][l] != null)
                             blocks[m][l].setY(blocks[m][l].getY()+SETS_GAME.SIZE);
+                      //  if(blocks[m][l] != null){
+                        //    blocks[m][l].setY(blocks[m][l].getY()+SETS_GAME.SIZE);
+                        //    blocks[m][l] = blocks[m][l-1];
+                           // blocks[m][l] = null;
+                      //  }
+
 
                     }
                 }
@@ -216,13 +239,21 @@ public class Tetris extends JPanel {
 
     private Tetrimino nextTetrimino(){
         Random r = new Random();
-        switch (r.nextInt(3)){
+        switch (r.nextInt(7)){
             case 0:
                 return new Itetrimino();
             case 1:
-                return new Otetrimino();
-            case 2:
                 return new Jtetrimino();
+            case 2:
+                return new Ltetrimino();
+            case 3:
+                return new Stetrimino();
+            case 4:
+                return new Ttetrimino();
+            case 5:
+                return new Ztetrimino();
+            case 6:
+                return new Otetrimino();
         }
         return new Otetrimino();
     }

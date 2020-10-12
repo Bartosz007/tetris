@@ -19,29 +19,23 @@ public abstract class Basic extends JPanel { //screen przykładowy z domyślnymi
 
 
         main_menu = new JPanel();
-        main_menu.setPreferredSize(new Dimension(SETS.SCREEN.width,SETS.SCREEN.height));
-        main_menu.setMaximumSize(new Dimension(SETS.SCREEN.width,SETS.SCREEN.height));
+        main_menu.setPreferredSize(new Dimension(SETS.WINDOW_SIZE,SETS.WINDOW_SIZE));
+        main_menu.setMaximumSize(new Dimension(SETS.WINDOW_SIZE,SETS.WINDOW_SIZE));
         main_menu.setLayout(new BoxLayout(main_menu,BoxLayout.LINE_AXIS));
         add(main_menu);
 
         first_panel = new JPanel();
-        first_panel.setPreferredSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
-        first_panel.setMaximumSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
         first_panel.setBackground(SETS.MAIN_COLOR);
         first_panel.setLayout(new BoxLayout(first_panel,BoxLayout.PAGE_AXIS));
         main_menu.add(first_panel);
 
         second_panel = new JPanel();
-        second_panel.setPreferredSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
-        second_panel.setMaximumSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
         second_panel.setBackground(SETS.SECONDARY_COLOR);
         second_panel.setLayout(new BoxLayout(second_panel,BoxLayout.PAGE_AXIS));
         main_menu.add(second_panel);
 
         thrid_panel = new JPanel();
-        thrid_panel.setPreferredSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
-        thrid_panel.setMaximumSize(new Dimension(SETS.SCREEN.width/3,SETS.SCREEN.height));
-        second_panel.setLayout(new BoxLayout(second_panel,BoxLayout.PAGE_AXIS));
+        thrid_panel.setLayout(new BoxLayout(thrid_panel,BoxLayout.PAGE_AXIS));
         thrid_panel.setBackground(SETS.MAIN_COLOR);
         main_menu.add(thrid_panel);
 

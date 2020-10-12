@@ -1,6 +1,5 @@
 package Layout;
 
-import Game.Game;
 import Settings.SETS;
 
 import javax.swing.*;
@@ -20,8 +19,8 @@ public class Menu extends Basic implements ActionListener {
 
 
         JPanel menu_container = new JPanel();
-        menu_container.setPreferredSize(new Dimension(SETS.SCREEN.width/4,SETS.SCREEN.height/2));
-        menu_container.setMaximumSize(new Dimension(SETS.SCREEN.width/4,SETS.SCREEN.height/2));
+       // menu_container.setPreferredSize(new Dimension(SETS.SCREEN.width/4,SETS.SCREEN.height/2));
+       // menu_container.setMaximumSize(new Dimension(SETS.SCREEN.width/4,SETS.SCREEN.height/2));
         menu_container.setBackground(Color.CYAN);
         menu_container.setLayout(new BoxLayout(menu_container,BoxLayout.PAGE_AXIS));
 
