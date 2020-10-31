@@ -1,6 +1,7 @@
 package helper;
 
 import setting.GAME;
+import setting.GLOBAL;
 import tetrimino.Block;
 import tetrimino.Tetrimino;
 
@@ -10,7 +11,7 @@ public class PaintMethods {
 
     public void paint_rect(Graphics2D g2d, int x, int y, Color color){
 
-        g2d.setColor(GAME.SECONDARY_COLOR);
+        g2d.setColor(GLOBAL.SECONDARY_COLOR);
         g2d.setStroke(new BasicStroke(GAME.BORDER));
         g2d.drawRect(x,y,GAME.SIZE,GAME.SIZE);
 
@@ -22,7 +23,7 @@ public class PaintMethods {
     public void paint_background(Graphics2D g2d){
         for(int i =0;i<GAME.COLS;i++){
             for(int j =0;j<GAME.ROWS;j++){
-                paint_rect(g2d, i*GAME.SIZE,j*GAME.SIZE, GAME.MAIN_COLOR);
+                paint_rect(g2d, i*GAME.SIZE,j*GAME.SIZE, GLOBAL.MAIN_COLOR);
             }
         }
     }

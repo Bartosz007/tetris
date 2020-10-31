@@ -1,6 +1,6 @@
 package setting;
 
-public class KEY {
+public final class KEY {
 
     public static final int UP = 0;
     public static final int LEFT = 1;

@@ -9,7 +9,7 @@ public class Otetrimino extends Tetrimino{
 
     public Otetrimino() {
         //TODO ustawić kolory tetrimino jako stałe
-        color = new Color(244,140,5);
+        color = GAME.OTETRIMINO_COLOR;
         rotate_state = 0;
         blocks = new Block[4];
         blocks[0] = new Block(GAME.MIDDLE-GAME.SIZE,0,color);

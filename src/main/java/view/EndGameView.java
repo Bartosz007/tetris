@@ -1,6 +1,7 @@
 package view;
 
 import builder.TableBuilder;
+import helper.BButton;
 import helper.JSONOperations;
 import org.json.simple.JSONObject;
 import setting.GAME;
@@ -25,6 +26,7 @@ public class EndGameView extends BasicView implements ActionListener {
     private String name;
     private JTextField player_value;
     private JSONOperations jsonOperations;
+    private BButton next;
 
     public EndGameView(JFrame window, JPanel previous_menu, int score) {
         super(window, previous_menu);
@@ -58,7 +60,9 @@ public class EndGameView extends BasicView implements ActionListener {
 
         table_container.setBackground(GLOBAL.SECONDARY_COLOR);
 
-        //
+        /**
+         * kolumna number
+         */
 
         JPanel number_col = new JPanel();
         number_col.setPreferredSize((new Dimension(80,40)));
@@ -66,7 +70,8 @@ public class EndGameView extends BasicView implements ActionListener {
         table_container.add(number_col);
 
         JLabel first_value = new JLabel();
-        first_value.setFont(VIEWS.HUGE_FONT);
+        first_value.setFont(VIEWS.PRIMARY_FONT);
+        first_value.setForeground(GLOBAL.MAIN_COLOR);
         number_col.add(first_value);
 
         ArrayList<TableBuilder> tableBuilders = jsonOperations.readFile();
@@ -79,7 +84,9 @@ public class EndGameView extends BasicView implements ActionListener {
         }
 
 
-        //
+        /**
+         * kolumna score
+         */
 
         JPanel score_col = new JPanel();
         score_col.setPreferredSize((new Dimension(170,40)));
@@ -87,10 +94,13 @@ public class EndGameView extends BasicView implements ActionListener {
         table_container.add(score_col);
 
         JLabel score_value = new JLabel(this.score+"");
-        score_value.setFont(VIEWS.HUGE_FONT);
+        score_value.setFont(VIEWS.PRIMARY_FONT);
+        score_value.setForeground(GLOBAL.MAIN_COLOR);
         score_col.add(score_value);
 
-        //
+        /**
+         * kolumna player
+         */
 
         JPanel player_col = new JPanel();
         player_col.setPreferredSize((new Dimension(200,40)));
@@ -98,22 +108,30 @@ public class EndGameView extends BasicView implements ActionListener {
         table_container.add(player_col);
 
         player_value = new JTextField();
-        player_value.setFont(VIEWS.HUGE_FONT);
-        player_value.setPreferredSize((new Dimension(100,35)));
-        player_value.setMaximumSize(new Dimension(100,35));
+        player_value.setFont(VIEWS.PRIMARY_FONT);
+        player_value.setForeground(GLOBAL.MAIN_COLOR);
+        player_value.setPreferredSize((new Dimension(100,30)));
+        player_value.setMaximumSize(new Dimension(100,30));
         player_value.setHorizontalAlignment(SwingConstants.CENTER);
+        player_value.setFocusable(true);
+        player_value.setBackground(GLOBAL.SECONDARY_COLOR);
+        player_value.setBorder(BorderFactory.createLineBorder(null,0));
         player_col.add(player_value);
 
-        //
+        /**
+         *
+         * kolumna next
+         */
 
         JPanel next_col = new JPanel();
-        next_col.setPreferredSize((new Dimension(80,40)));
-        next_col.setMaximumSize(new Dimension(80,40));
+        next_col.setPreferredSize((new Dimension(80,80)));
+        next_col.setMaximumSize(new Dimension(80,80));
+        next_col.setLayout(new BoxLayout(next_col,BoxLayout.LINE_AXIS));
         table_container.add(next_col);
 
-        JButton next = new JButton("DALEJ");
-        next.setPreferredSize((new Dimension(80,40)));
-        next.setMaximumSize(new Dimension(80,40));
+        next = new BButton("DALEJ");
+        next.setPreferredSize((new Dimension(80,80)));
+        next.setMaximumSize(new Dimension(80,80));
         next_col.add(next);
 
         number_col.setOpaque(false);
@@ -143,6 +161,8 @@ public class EndGameView extends BasicView implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         this.name = player_value.getText();
 
+        if(name.equals(""))
+            name = "NN";
         JSONOperations jsonOperations = new JSONOperations(GAME.SCORE_PATH);
         jsonOperations.saveToFile(new TableBuilder(score, name));
 

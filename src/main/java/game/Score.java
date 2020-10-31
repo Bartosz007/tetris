@@ -17,7 +17,7 @@ public class Score {
 
         score = new ScoreBuilder("WYNIK:",0);
         lines = new ScoreBuilder("LINIE:",0);
-        speed = new ScoreBuilder("SZYBKOSC:",1);
+        speed = new ScoreBuilder("SZYBKOŚĆ:",1);
 
     }
 
@@ -33,6 +33,8 @@ public class Score {
 
         jp.add(speed.buildPanel());
 
+        jp.setOpaque(false);
+
         return jp;
     }
 
@@ -43,7 +45,6 @@ public class Score {
     public ScoreBuilder getLines() {
         return lines;
     }
-
 
     public ScoreBuilder getSpeed() {
         return speed;

@@ -1,5 +1,6 @@
 package builder;
 
+import setting.GLOBAL;
 import setting.VIEWS;
 
 import javax.swing.*;
@@ -18,6 +19,8 @@ public class ScoreBuilder{
         this.jlheader.setFont(VIEWS.SECONDARY_FONT);
         this.jlvalue.setFont(VIEWS.SECONDARY_FONT);
 
+        this.jlheader.setForeground(GLOBAL.MAIN_COLOR);
+        this.jlvalue.setForeground(GLOBAL.MAIN_COLOR);
 
     }
 
@@ -46,6 +49,10 @@ public class ScoreBuilder{
 
         jpmain.add(jpheader);
         jpmain.add(jpvalue);
+
+        jpheader.setOpaque(false);
+        jpvalue.setOpaque(false);
+        jpmain.setOpaque(false);
 
         return jpmain;
     }

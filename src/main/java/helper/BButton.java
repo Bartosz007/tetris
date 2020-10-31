@@ -1,5 +1,7 @@
 package helper;
 
+import setting.GAME;
+import setting.GLOBAL;
 import setting.VIEWS;
 
 import javax.swing.*;
@@ -8,18 +10,21 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class BJButton extends JButton implements MouseListener {
-    public BJButton(String text) {
+public class BButton extends JButton implements MouseListener {
+    public BButton(String text) {
         super(text);
 
-        setBackground(VIEWS.BUTTON_BG);
+        setBackground(GLOBAL.SECONDARY_COLOR);
+        setForeground(GLOBAL.MAIN_COLOR);
         setFont(VIEWS.PRIMARY_FONT);
+        setBorder(BorderFactory.createLineBorder(null,0));
+        setFocusable(false);
+        this.addMouseListener(this);
     }
 
-    public void setJButton(Dimension size, Border border){
+    public void setButton(Dimension size){
         setPreferredSize(size);
         setMaximumSize(size);
-        setBorder(border);
     }
 
     @Override
@@ -39,11 +44,14 @@ public class BJButton extends JButton implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        JButton jb =(JButton)e.getSource();
+        jb.setBackground(GAME.SECONDARY_COLOR_BRIGHTER);
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        JButton jb =(JButton)e.getSource();
+        jb.setBackground(GAME.SECONDARY_COLOR);
     }
 }

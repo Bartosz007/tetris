@@ -1,6 +1,6 @@
 package view;
 
-import helper.BJButton;
+import helper.BButton;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,9 +14,9 @@ import static setting.VIEWS.MAIN_MENU_BG;
 
 public class OptionsView extends BasicView implements ActionListener {
 
-    private BJButton music;
-    private BJButton sound;
-    private BJButton back ;
+    private BButton music;
+    private BButton sound;
+    private BButton back ;
 
     private boolean music_status;
     private boolean sound_status;
@@ -49,16 +49,16 @@ public class OptionsView extends BasicView implements ActionListener {
         second_panel.add(buttons_containter);
 
 
-        music = new BJButton("Muzyka wlaczona");
-        music.setJButton(new Dimension(200,100),null);
+        music = new BButton("Muzyka włączona");
+        music.setButton(new Dimension(200,100));
         buttons_containter.add(music);
 
-        sound = new BJButton("Dzwieki wlaczone");
-        sound.setJButton(new Dimension(200,100),null);
+        sound = new BButton("Dzwięki włączone");
+        sound.setButton(new Dimension(200,100));
         buttons_containter.add(sound);
 
-        back = new BJButton("Powrot");
-        back.setJButton(new Dimension(200,100),null);
+        back = new BButton("POWRÓT");
+        back.setButton(new Dimension(200,100));
         first_panel.add(back);
 
         music.addActionListener(this);
@@ -68,20 +68,20 @@ public class OptionsView extends BasicView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BJButton button = (BJButton)e.getSource();
+        BButton button = (BButton)e.getSource();
 
         if(button == music){
             if(music_status){
-                music.setText("Muzyka wylaczona");
+                music.setText("Muzyka wyłączona");
             }else{
-                music.setText("Muzyka wlaczona");
+                music.setText("Muzyka włączona");
             }
             music_status=!music_status;
         }else if (button == sound){
             if(sound_status){
-                sound.setText("Dzwiek wylaczony");
+                sound.setText("Dźwięk wyłączony");
             }else{
-                sound.setText("Dzwiek wlaczony");
+                sound.setText("Dźwięk włączony");
             }
             sound_status=!sound_status;
         }

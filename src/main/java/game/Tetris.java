@@ -7,7 +7,6 @@ import setting.KEY;
 import tetrimino.*;
 import view.EndGameView;
 import view.GameView;
-import view.MenuView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,20 +18,19 @@ public class Tetris extends JPanel {
 
     private final Block[][] blocks;
     private Tetrimino tetrimino;
-   // private NextTetrimino next_tetrimino;
     private Timer timer;
     private int counter;
     private Score score;
-    private JPanel next_jpanel;
+    private JPanel next_tetrimino;
     private int speed;
     private int points;
     private PaintMethods paintMethods;
     private NextTetrimino nextTetrimino;
     private GameView gameView;
     private JFrame window;
-    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_jpanel) {
+    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino) {
         this.score = score;
-        this.next_jpanel = next_jpanel;
+        this.next_tetrimino = next_tetrimino;
         this.gameView = gameView;
         this.window = window;
 
@@ -45,7 +43,7 @@ public class Tetris extends JPanel {
         tetrimino = newTetrimino();
         nextTetrimino = new NextTetrimino(newTetrimino());
 
-        next_jpanel.add(nextTetrimino);
+        next_tetrimino.add(nextTetrimino);
         System.out.println("wydrukowano2");
        // next_tetrimino = new NextTetrimino(nextTetrimino());
 

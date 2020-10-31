@@ -2,7 +2,7 @@ package view;
 
 import builder.TableBuilder;
 import helper.BBasicScrollBarUI;
-import helper.BJButton;
+import helper.BButton;
 import helper.JSONOperations;
 import setting.GAME;
 import setting.GLOBAL;
@@ -10,7 +10,6 @@ import setting.VIEWS;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +24,7 @@ import static setting.VIEWS.MAIN_MENU_BG;
 
 public class ScoresView extends BasicView implements ActionListener, MouseListener {
 
-    private BJButton back;
+    private BButton back;
     public ScoresView(JFrame window, JPanel previous_menu) {
         super(window, previous_menu);
 
@@ -66,8 +65,8 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         second_panel.add(scrollPane);
 
 
-        back = new BJButton("Powrot");
-        back.setJButton(new Dimension(200,100),null);
+        back = new BButton("POWRÓT");
+        back.setButton(new Dimension(200,100));
         back.setForeground(GLOBAL.MAIN_COLOR);
         back.addMouseListener(this);
         first_panel.add(back);
@@ -121,7 +120,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(number_col);
 
         JLabel first_value = new JLabel(i+".");
-        first_value.setFont(VIEWS.HUGE_FONT);
+        first_value.setFont(VIEWS.SECONDARY_FONT);
         first_value.setForeground(GLOBAL.MAIN_COLOR);
         number_col.add(first_value);
 
@@ -135,7 +134,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(score_col);
 
         JLabel score_value = new JLabel(tableBuilder.getScore()+"");
-        score_value.setFont(VIEWS.HUGE_FONT);
+        score_value.setFont(VIEWS.SECONDARY_FONT);
         score_value.setForeground(GLOBAL.MAIN_COLOR);
 
         score_col.add(score_value);
@@ -149,7 +148,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(player_col);
 
         JLabel player_value = new JLabel(tableBuilder.getName()+"");
-        player_value.setFont(VIEWS.HUGE_FONT);
+        player_value.setFont(VIEWS.SECONDARY_FONT);
         player_value.setForeground(GLOBAL.MAIN_COLOR);
 
         player_col.add(player_value);

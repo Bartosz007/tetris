@@ -1,10 +1,10 @@
 package game;
 
 import helper.PaintMethods;
+import setting.GAME;
 import setting.GLOBAL;
 import setting.VIEWS;
 import tetrimino.Block;
-import tetrimino.Otetrimino;
 import tetrimino.Tetrimino;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class NextTetrimino extends JPanel {
     public NextTetrimino(Tetrimino tetrimino) {
         this.tetrimino = tetrimino;
         this.paintMethods = new PaintMethods();
-        setBackground(GLOBAL.SECONDARY_COLOR);
+        setBackground(GAME.SECONDARY_COLOR);
     }
 
     @Override
@@ -25,7 +25,8 @@ public class NextTetrimino extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g.create();
         g2d.setColor(GLOBAL.MAIN_COLOR);
-        g2d.drawString("NASTEPNY: ",65,20);
+        g2d.setFont(VIEWS.SECONDARY_FONT);
+        g2d.drawString("NASTĘPNY: ",40,20);
 
         for (Block b :tetrimino.getBlocks() ) {
             paintMethods.paint_rect(g2d,b.getX()-150,b.getY()+40,b.getColor());

@@ -7,7 +7,7 @@ import java.awt.*;
 public class Stetrimino extends Tetrimino{
 
     public Stetrimino() {
-        color = new Color(244,33,194);
+        color = GAME.STETRIMINO_COLOR;
         rotate_state = 0;
         blocks = new Block[4];
         blocks[0] = new Block(GAME.MIDDLE-GAME.SIZE,GAME.SIZE,color);

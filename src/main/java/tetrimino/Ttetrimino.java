@@ -8,7 +8,7 @@ import java.awt.*;
 public class Ttetrimino extends Tetrimino{
 
     public Ttetrimino() {
-        color = new Color(15,85,0);
+        color = GAME.TTETRIMINO_COLOR;
         rotate_state = 0;
         blocks = new Block[4];
         blocks[0] = new Block(GAME.MIDDLE-GAME.SIZE,GAME.SIZE,color);

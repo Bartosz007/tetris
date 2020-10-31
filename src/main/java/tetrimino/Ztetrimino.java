@@ -8,7 +8,7 @@ public class Ztetrimino extends Tetrimino{
 
     public Ztetrimino() {
 
-        color = new Color(44,133,244);
+        color = GAME.ZTETRIMINO_COLOR;
         rotate_state = 0;
         blocks = new Block[4];
         blocks[0] = new Block(GAME.MIDDLE+GAME.SIZE,GAME.SIZE,color);

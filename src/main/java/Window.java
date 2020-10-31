@@ -12,10 +12,9 @@ public class Window extends JFrame {
         // setExtendedState(JFrame.MAXIMIZED_BOTH); //maksymalizacja okna, zmienić rozmiar
       //  setSize(SETS.WINDOW_SIZE,SETS.WINDOW_SIZE);
        // setSize(GLOBAL.WINDOW_SIZE);
-        setTitle("TETRIS");
+        setTitle("TETRIS by BK");
      // getContentPane().setPreferredSize(GLOBAL.WINDOW_SIZE);
-
-        add(new MenuView(this));
+          add(new MenuView(this));
       //  add(new GameView(this,null));
       //  add(new EndGameView(this,null,8888));
         pack();

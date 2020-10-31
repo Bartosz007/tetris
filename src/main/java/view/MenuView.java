@@ -1,6 +1,6 @@
 package view;
 
-import helper.BJButton;
+import helper.BButton;
 import setting.VIEWS;
 
 import javax.imageio.ImageIO;
@@ -15,10 +15,10 @@ import static setting.VIEWS.MAIN_MENU_BG;
 
 public class MenuView extends BasicView implements ActionListener {
 
-    private final BJButton game;
-    private final BJButton options;
-    private final BJButton scores;
-    private final BJButton exit;
+    private final BButton game;
+    private final BButton options;
+    private final BButton scores;
+    private final BButton exit;
 
     public MenuView(JFrame window) {
         super(window,null);
@@ -46,14 +46,17 @@ public class MenuView extends BasicView implements ActionListener {
         menu.setOpaque(false);
         second_panel.add(menu);
 
-        game = new BJButton("START");
-        game.setJButton(VIEWS.BUTTON_SIZE,VIEWS.BUTTON_BORDER);
-        options = new BJButton("OPCJE");
-        options.setJButton(VIEWS.BUTTON_SIZE,VIEWS.BUTTON_BORDER);
-        scores = new BJButton("WYNIKI");
-        scores.setJButton(VIEWS.BUTTON_SIZE,VIEWS.BUTTON_BORDER);
-        exit = new BJButton("WYJSCIE");
-        exit.setJButton(VIEWS.BUTTON_SIZE,VIEWS.BUTTON_BORDER);
+
+
+
+        game = new BButton("START");
+        game.setButton(VIEWS.BUTTON_SIZE);
+        options = new BButton("OPCJE");
+        options.setButton(VIEWS.BUTTON_SIZE);
+        scores = new BButton("WYNIKI");
+        scores.setButton(VIEWS.BUTTON_SIZE);
+        exit = new BButton("WYJŚCIE");
+        exit.setButton(VIEWS.BUTTON_SIZE);
 
 
         menu.add(Box.createVerticalStrut(15));
@@ -70,10 +73,6 @@ public class MenuView extends BasicView implements ActionListener {
         scores.addActionListener(this);
         exit.addActionListener(this);
 
-        game.setFocusable(false);
-        options.setFocusable(false);
-        scores.setFocusable(false);
-        exit.setFocusable(false);
     }
 
     @Override
