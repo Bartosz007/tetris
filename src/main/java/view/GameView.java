@@ -2,7 +2,10 @@ package view;
 
 import game.Score;
 import game.Tetris;
-import helper.BButton;
+import helper.file.JSONOperations;
+import helper.gui.BButton;
+import helper.sound.SoundPlayer;
+import helper.sound.SoundSettings;
 import setting.GAME;
 import setting.GLOBAL;
 
@@ -12,13 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameView extends BasicView implements ActionListener {
-    private final BButton back;
-    private final Score score;
 
-    public GameView(JFrame window, JPanel previous_menu) {
+    public GameView(JFrame window, JPanel previous_menu, SoundPlayer soundPlayer) {
         super(window, previous_menu);
 
-        score = new Score();
+        Score score = new Score();
 
         setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
         setBackground(GLOBAL.SECONDARY_COLOR);
@@ -40,16 +41,16 @@ public class GameView extends BasicView implements ActionListener {
 
         second_panel.setBackground(Color.green);
 
-        /**
+        /*
 
         lewy panel
 
-         **/
+         */
+
         JPanel left_upper = new JPanel();
         left_upper.setPreferredSize(new Dimension(200,100));
         left_upper.setMaximumSize(new Dimension(200,100));
         left_upper.setLayout(new BoxLayout(left_upper,BoxLayout.LINE_AXIS));
-        left_upper.setBackground(Color.magenta);
         first_panel.add(left_upper);
 
         JPanel left_lower = new JPanel();
@@ -69,17 +70,17 @@ public class GameView extends BasicView implements ActionListener {
 
         score_container.add(score.buildScore());
 
-        back = new BButton("POWRÓT");
+        BButton back = new BButton("POWRÓT");
         back.setButton(new Dimension(200,100));
         back.addActionListener(this);
         left_upper.add(back);
 
 
-         /**
+         /*
 
         prawy panel
 
-         **/
+         */
 
         JPanel right_center = new JPanel();
         right_center.setPreferredSize(new Dimension(200,900));
@@ -96,11 +97,11 @@ public class GameView extends BasicView implements ActionListener {
 
 
 
-        /**
+        /*
         środkowy panel
 
-         **/
-        JPanel tetris = new Tetris(window,this, score,next_tetrimino);
+         */
+        JPanel tetris = new Tetris(window,this, score,next_tetrimino, soundPlayer);
         tetris.setPreferredSize(new Dimension(GAME.COLS*GAME.SIZE,GLOBAL.BASIC_SIZE));
         tetris.setMaximumSize(new Dimension(GAME.COLS* GAME.SIZE,GLOBAL.BASIC_SIZE));
         second_panel.add(tetris);
@@ -109,6 +110,14 @@ public class GameView extends BasicView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
+        SoundSettings soundSettings = new SoundSettings(jsonOperations);
+        if(soundSettings.isSoundOn()){
+            SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
+            soundPlayer2.playOnce();
+        }
+
+
         setVisible(false);
         previous_menu.setVisible(true);
     }

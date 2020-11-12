@@ -1,12 +1,12 @@
 package view;
 
 import builder.TableBuilder;
-import helper.BBasicScrollBarUI;
-import helper.BButton;
-import helper.JSONOperations;
-import setting.GAME;
+import helper.gui.BBasicScrollBarUI;
+import helper.gui.BButton;
+import helper.file.JSONOperations;
+import helper.sound.SoundPlayer;
+import helper.sound.SoundSettings;
 import setting.GLOBAL;
-import setting.VIEWS;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,12 +19,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static setting.VIEWS.MAIN_MENU_BG;
+import static setting.GLOBAL.MAIN_MENU_BG;
 
 
 public class ScoresView extends BasicView implements ActionListener, MouseListener {
 
-    private BButton back;
     public ScoresView(JFrame window, JPanel previous_menu) {
         super(window, previous_menu);
 
@@ -48,7 +47,6 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         table.setLayout(new BoxLayout(table, BoxLayout.PAGE_AXIS));
         table.setOpaque(false);
 
-        //JScrollPane scrollPane = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize((new Dimension(400,800)));
         scrollPane.setMaximumSize(new Dimension(400,800));
@@ -65,7 +63,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         second_panel.add(scrollPane);
 
 
-        back = new BButton("POWRÓT");
+        BButton back = new BButton("POWRÓT");
         back.setButton(new Dimension(200,100));
         back.setForeground(GLOBAL.MAIN_COLOR);
         back.addMouseListener(this);
@@ -73,7 +71,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
 
         back.addActionListener(this);
 
-        JSONOperations jsonOperations = new JSONOperations(GAME.SCORE_PATH);
+        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SCORE_PATH);
         ArrayList<TableBuilder> tableBuilders = jsonOperations.readFile();
         for (int i = 0; i < tableBuilders.size(); i++) {
             drawLine(table, i+1, tableBuilders.get(i));
@@ -83,6 +81,14 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
+        SoundSettings soundSettings = new SoundSettings(jsonOperations);
+        if(soundSettings.isSoundOn()){
+            SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
+            soundPlayer2.playOnce();
+        }
+
+
         this.setVisible(false);
         previous_menu.setVisible(true);
     }
@@ -120,7 +126,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(number_col);
 
         JLabel first_value = new JLabel(i+".");
-        first_value.setFont(VIEWS.SECONDARY_FONT);
+        first_value.setFont(GLOBAL.SECONDARY_FONT);
         first_value.setForeground(GLOBAL.MAIN_COLOR);
         number_col.add(first_value);
 
@@ -134,7 +140,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(score_col);
 
         JLabel score_value = new JLabel(tableBuilder.getScore()+"");
-        score_value.setFont(VIEWS.SECONDARY_FONT);
+        score_value.setFont(GLOBAL.SECONDARY_FONT);
         score_value.setForeground(GLOBAL.MAIN_COLOR);
 
         score_col.add(score_value);
@@ -148,7 +154,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.add(player_col);
 
         JLabel player_value = new JLabel(tableBuilder.getName()+"");
-        player_value.setFont(VIEWS.SECONDARY_FONT);
+        player_value.setFont(GLOBAL.SECONDARY_FONT);
         player_value.setForeground(GLOBAL.MAIN_COLOR);
 
         player_col.add(player_value);
@@ -173,14 +179,14 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
     @Override
     public void mouseEntered(MouseEvent e) {
         Component component =(Component)e.getSource();
-        component.setBackground(GAME.SECONDARY_COLOR_BRIGHTER);
+        component.setBackground(GLOBAL.SECONDARY_COLOR_BRIGHTER);
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         Component component =(Component)e.getSource();
-        component.setBackground(GAME.SECONDARY_COLOR);
+        component.setBackground(GLOBAL.SECONDARY_COLOR);
     }
 
 }

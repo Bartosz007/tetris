@@ -1,8 +1,12 @@
 package game;
 
 
-import helper.PaintMethods;
+import helper.file.JSONOperations;
+import helper.methods.PaintMethods;
+import helper.sound.SoundPlayer;
+import helper.sound.SoundSettings;
 import setting.GAME;
+import setting.GLOBAL;
 import setting.KEY;
 import tetrimino.*;
 import view.EndGameView;
@@ -17,26 +21,30 @@ import java.util.Random;
 public class Tetris extends JPanel {
 
     private final Block[][] blocks;
-    private Tetrimino tetrimino;
-    private Timer timer;
-    private int counter;
-    private Score score;
-    private JPanel next_tetrimino;
+    private final PaintMethods paintMethods;
+    private final NextTetrimino nextTetrimino;
+    private final GameView gameView;
+    private final JFrame window;
+    private final SoundPlayer soundPlayer;
+    private final SoundSettings soundSettings;
+    private final Timer timer;
+    private final Score score;
+
     private int speed;
-    private int points;
-    private PaintMethods paintMethods;
-    private NextTetrimino nextTetrimino;
-    private GameView gameView;
-    private JFrame window;
-    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino) {
+    private long nextFrameTime;
+    private long fallTime;
+    private Tetrimino tetrimino;
+
+    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino, SoundPlayer soundPlayer) {
         this.score = score;
-        this.next_tetrimino = next_tetrimino;
         this.gameView = gameView;
         this.window = window;
+        this.soundPlayer = soundPlayer;
 
         this.paintMethods = new PaintMethods();
         this.speed = score.getSpeed().getValue();
-        this.points = score.getScore().getValue();
+
+        this.fallTime = GAME.DROP_TIME;
 
         blocks = new Block[GAME.COLS][GAME.ROWS];
 
@@ -44,13 +52,12 @@ public class Tetris extends JPanel {
         nextTetrimino = new NextTetrimino(newTetrimino());
 
         next_tetrimino.add(nextTetrimino);
-        System.out.println("wydrukowano2");
-       // next_tetrimino = new NextTetrimino(nextTetrimino());
 
         addKeyListeners();
 
-        counter = GAME.DELAY;
-
+        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
+        soundSettings = new SoundSettings(jsonOperations);
+        nextFrameTime = System.currentTimeMillis() + fallTime;
         timer = new Timer(GAME.DELAY, e -> {
 
             calculate();
@@ -60,42 +67,33 @@ public class Tetris extends JPanel {
         timer.start();
     }
 
-    //TODO: poprawić pierwszy skok
     private void calculate(){
 
-        if(counter < 0){
+        if(nextFrameTime < System.currentTimeMillis()){
             if(tetrimino.isFelt(blocks)){
+
+                if(soundSettings.isSoundOn()){
+                    SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
+                    soundPlayer2.playOnce();
+                }
 
                 for (Block block:tetrimino.getBlocks()) {
 
                     blocks[block.getX()/GAME.SIZE][block.getY()/GAME.SIZE] = block;
                 }
 
-                check_lines();
-
-                //TODO: poprawić to, te nule i koniec gry
-                if(blocks[5][1]!=null || blocks[6][1]!=null) { // sprawdzenie czy te bloki nie są zajęte
-
-                    timer.stop();
-                    //tu ustawić chwilę opóźnienia
-
-                    gameView.setVisible(false);
-                    window.add(new EndGameView(window,null, score.getScore().getValue()));
-
-                }
+                checkLines();
+                isGameEnd();
 
                 tetrimino = nextTetrimino.getTetrimino();
                 nextTetrimino.setTetrimino(newTetrimino());
 
             }else{
-
                 tetrimino.gravit();
-                counter = GAME.DELAY - 2*this.speed + 2;
             }
 
+            nextFrameTime = System.currentTimeMillis() + fallTime;
         }
-
-        counter --;
 
 
 
@@ -119,43 +117,6 @@ public class Tetris extends JPanel {
         g2d.dispose();
     }
 
-    private void check_lines() {
-        int counter;
-        for(int j =0;j<GAME.ROWS;j++){
-
-            counter = 0;
-            for(int i = 0;i<GAME.COLS;i++)
-                if(blocks[i][j]!=null)
-                    counter ++;
-
-
-
-            if(counter == GAME.COLS){
-                for(int k = 0;k<GAME.COLS;k++)
-                    blocks[k][j]=null;
-
-                score.getScore().addValue(Score.LINE*this.speed);
-                score.getLines().addValue(1);
-                //TODO: poprawić kolizje podczas obrotów
-                if(this.speed != score.calculateSpeed()){ //TODO: przerobić opad na czas rzeczywisty
-                    score.getSpeed().addValue(1);
-                    this.speed++;
-                }
-
-
-                for(int l = j;l>0;l--) { //grawitacja
-                    for (int m = 0; m < GAME.COLS; m++) {
-                        blocks[m][l] = blocks[m][l-1];
-                        if(blocks[m][l] != null)
-                            blocks[m][l].setY(blocks[m][l].getY()+GAME.SIZE);
-
-                    }
-                }
-                check_lines();
-
-            }
-        }
-    }
 
     private Tetrimino newTetrimino(){
         int rand = new Random().nextInt(7);
@@ -177,6 +138,73 @@ public class Tetris extends JPanel {
                 return new Otetrimino();
         }
     }
+
+
+    private void checkLines() {
+        int counter;
+        for(int j =0;j<GAME.ROWS;j++){
+
+            counter = 0;
+            for(int i = 0;i<GAME.COLS;i++){
+                if(blocks[i][j]!=null)
+                    counter ++;
+            }
+
+
+
+
+            if(counter == GAME.COLS){
+                for(int k = 0;k<GAME.COLS;k++)
+                    blocks[k][j]=null;
+
+                score.getScore().addValue(Score.LINE*this.speed);
+                score.getLines().addValue(1);
+
+                if(this.speed != score.calculateSpeed()){
+
+                    score.getSpeed().addValue(1);
+                    this.speed++;
+                    this.fallTime=this.fallTime-100;
+                }
+
+
+                for(int l = j;l>0;l--) { //grawitacja
+                    for (int m = 0; m < GAME.COLS; m++) {
+                        blocks[m][l] = blocks[m][l-1];
+                        if(blocks[m][l]!=null)
+                            blocks[m][l].setY(blocks[m][l].getY()+GAME.SIZE);
+
+                    }
+                }
+                checkLines();
+
+            }
+        }
+    }
+
+    private void isGameEnd(){
+
+        if(blocks[5][1]!=null || blocks[6][1]!=null) {
+
+
+            timer.stop();
+            soundPlayer.stop();
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            gameView.setVisible(false);
+            window.add(new EndGameView(window,null, score.getScore().getValue()));
+
+        }
+
+    }
+
+
 
     void addKeyListeners(){
         int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -211,11 +239,8 @@ public class Tetris extends JPanel {
                     tetrimino.rotate();
                 }
                 if(button==KEY.DOWN){
-                    //TODO: poprawić to ->
-                    counter = counter - 20;
+                    nextFrameTime = System.currentTimeMillis();
                     score.getScore().addValue(Score.DOWN_BUTTON*speed);
-                    //   score.setScore_value(score.getScore_value()+SETS_GAME.SCORE_DOWN_BUTTON*score.getLevel_value());
-                    //   score.setScore(score.getScore_value());
                 }
 
                 if(button==KEY.SPACE){
@@ -226,13 +251,10 @@ public class Tetris extends JPanel {
                     }
                     score.getScore().addValue(Score.SPACE*count*speed);
 
-                    //   score.setScore_value(score.getScore_value()+SETS_GAME.SCORE_SPACE*score.getLevel_value());
-                    //  score.setScore(score.getScore_value());
                 }
 
             }
         };
     }
-
 
 }

@@ -1,8 +1,8 @@
 package builder;
 
 public class TableBuilder {
-    private int score;
-    private String name;
+    private final int score;
+    private final String name;
 
     public TableBuilder( int score, String name) {
         this.score = score;
@@ -14,16 +14,8 @@ public class TableBuilder {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

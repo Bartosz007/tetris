@@ -5,9 +5,9 @@ import builder.ScoreBuilder;
 import javax.swing.*;
 
 public class Score {
-    private ScoreBuilder score;
-    private ScoreBuilder lines;
-    private ScoreBuilder speed;
+    private final ScoreBuilder score;
+    private final ScoreBuilder lines;
+    private final ScoreBuilder speed;
 
     public static int DOWN_BUTTON = 1;
     public static int SPACE = 2;
@@ -55,7 +55,7 @@ public class Score {
 
         if(lines <10)
             return 1;
-        else if (lines > 9 && lines<20)
+        else if (lines >=10 && lines<20)
             return 2;
         else if(lines > 19 && lines<30)
             return 3;
@@ -63,9 +63,9 @@ public class Score {
             return 4;
         else if(lines > 39 && lines<50)
             return 5;
-        else if(lines > 69 && lines<90)
+        else if(lines > 49 && lines<80)
             return 6;
-        else if(lines > 89 && lines<110)
+        else if(lines > 79 && lines<110)
             return 7;
         else if(lines > 109 && lines<149)
             return 8;

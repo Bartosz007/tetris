@@ -2,8 +2,6 @@ package tetrimino;
 
 import setting.GAME;
 
-import java.awt.*;
-
 public class Itetrimino extends Tetrimino{
 
     public Itetrimino() {

@@ -6,7 +6,7 @@ public class Block {
 
     private int x;
     private int y;
-    private Color color;
+    private final Color color;
 
     public Block(int x, int y, Color color) {
         this.x = x;

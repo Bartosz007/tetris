@@ -3,7 +3,6 @@ package view;
 import setting.GLOBAL;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class BasicView extends JPanel { //screen przykładowy z domyślnymi wartosciami wszystkiego
 

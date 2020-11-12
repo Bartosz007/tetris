@@ -1,10 +1,7 @@
 package tetrimino;
 
 
-
 import setting.GAME;
-
-import java.awt.*;
 
 public class Jtetrimino extends Tetrimino {
     public Jtetrimino() {

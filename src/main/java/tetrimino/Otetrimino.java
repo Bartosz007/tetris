@@ -3,12 +3,9 @@ package tetrimino;
 
 import setting.GAME;
 
-import java.awt.*;
-
 public class Otetrimino extends Tetrimino{
 
     public Otetrimino() {
-        //TODO ustawić kolory tetrimino jako stałe
         color = GAME.OTETRIMINO_COLOR;
         rotate_state = 0;
         blocks = new Block[4];

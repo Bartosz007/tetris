@@ -1,26 +1,24 @@
 package builder;
 
 import setting.GLOBAL;
-import setting.VIEWS;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ScoreBuilder{
-    private JLabel jlheader;
-    private JLabel jlvalue;
+    private final JLabel jlheader;
+    private final JLabel lvalue;
     private int value;
 
     public ScoreBuilder(String header, int value) {
         this.jlheader = new JLabel(header);
-        this.jlvalue = new JLabel(value+"");
+        this.lvalue = new JLabel(value+"");
         this.value = value;
 
-        this.jlheader.setFont(VIEWS.SECONDARY_FONT);
-        this.jlvalue.setFont(VIEWS.SECONDARY_FONT);
+        this.jlheader.setFont(GLOBAL.SECONDARY_FONT);
+        this.lvalue.setFont(GLOBAL.SECONDARY_FONT);
 
         this.jlheader.setForeground(GLOBAL.MAIN_COLOR);
-        this.jlvalue.setForeground(GLOBAL.MAIN_COLOR);
+        this.lvalue.setForeground(GLOBAL.MAIN_COLOR);
 
     }
 
@@ -30,7 +28,7 @@ public class ScoreBuilder{
 
     public void addValue(int val) {
         this.value = this.value + val;
-        this.jlvalue.setText(this.value+"");
+        this.lvalue.setText(this.value+"");
     }
 
     public JPanel buildPanel(){
@@ -44,7 +42,7 @@ public class ScoreBuilder{
 
         JPanel jpvalue = new JPanel();
         jpvalue.setLayout(new BoxLayout(jpvalue,BoxLayout.LINE_AXIS));
-        jpvalue.add(jlvalue);
+        jpvalue.add(lvalue);
 
 
         jpmain.add(jpheader);
