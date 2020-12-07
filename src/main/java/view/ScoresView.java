@@ -93,7 +93,6 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
             e.printStackTrace();
         }
         g.drawImage(background,0,0,900,900,this);
-
     }
 
     void drawLine(JPanel panel, int i, TableBuilder tableBuilder){
@@ -104,8 +103,6 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         row.setBackground(GLOBAL.SECONDARY_COLOR);
         row.addMouseListener(this);
         panel.add(row);
-
-        //table_container.setBackground(GLOBAL.SECONDARY_COLOR);
 
         JPanel number_col = new JPanel();
         number_col.setPreferredSize((new Dimension(80,40)));
@@ -119,7 +116,6 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         first_value.setFont(GLOBAL.SECONDARY_FONT);
         first_value.setForeground(GLOBAL.MAIN_COLOR);
         number_col.add(first_value);
-
 
         //
 
@@ -153,24 +149,20 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         Component component =(Component)e.getSource();
         component.setBackground(GLOBAL.SECONDARY_COLOR_BRIGHTER);
-
     }
 
     @Override
