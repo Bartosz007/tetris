@@ -4,7 +4,7 @@ import setting.GLOBAL;
 
 import javax.swing.*;
 
-public abstract class BasicView extends JPanel { //screen przykładowy z domyślnymi wartosciami wszystkiego
+public abstract class BasicView extends JPanel {
 
     protected JFrame window;
     protected JPanel previous_menu;

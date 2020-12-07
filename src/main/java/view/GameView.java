@@ -2,10 +2,7 @@ package view;
 
 import game.Score;
 import game.Tetris;
-import helper.file.JSONOperations;
 import helper.gui.BButton;
-import helper.sound.SoundPlayer;
-import helper.sound.SoundSettings;
 import setting.GAME;
 import setting.GLOBAL;
 
@@ -16,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class GameView extends BasicView implements ActionListener {
 
-    public GameView(JFrame window, JPanel previous_menu, SoundPlayer soundPlayer) {
+    public GameView(JFrame window, JPanel previous_menu) {
         super(window, previous_menu);
 
         Score score = new Score();
@@ -95,13 +92,12 @@ public class GameView extends BasicView implements ActionListener {
         next_tetrimino.setLayout(new BoxLayout(next_tetrimino,BoxLayout.PAGE_AXIS));
         right_center.add(next_tetrimino);
 
-
-
         /*
         środkowy panel
 
          */
-        JPanel tetris = new Tetris(window,this, score,next_tetrimino, soundPlayer);
+
+        JPanel tetris = new Tetris(window,this, score,next_tetrimino);
         tetris.setPreferredSize(new Dimension(GAME.COLS*GAME.SIZE,GLOBAL.BASIC_SIZE));
         tetris.setMaximumSize(new Dimension(GAME.COLS* GAME.SIZE,GLOBAL.BASIC_SIZE));
         second_panel.add(tetris);
@@ -110,14 +106,6 @@ public class GameView extends BasicView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
-        SoundSettings soundSettings = new SoundSettings(jsonOperations);
-        if(soundSettings.isSoundOn()){
-            SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
-            soundPlayer2.playOnce();
-        }
-
-
         setVisible(false);
         previous_menu.setVisible(true);
     }

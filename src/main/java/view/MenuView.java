@@ -1,9 +1,6 @@
 package view;
 
 import helper.gui.BButton;
-import helper.file.JSONOperations;
-import helper.sound.SoundPlayer;
-import helper.sound.SoundSettings;
 import setting.GLOBAL;
 
 import javax.imageio.ImageIO;
@@ -19,10 +16,7 @@ import static setting.GLOBAL.MAIN_MENU_BG;
 public class MenuView extends BasicView implements ActionListener {
 
     private final BButton game;
-    private final BButton options;
     private final BButton scores;
-    private final SoundPlayer soundPlayer;
-    private SoundSettings soundSettings;
 
     public MenuView(JFrame window) {
         super(window,null);
@@ -50,12 +44,8 @@ public class MenuView extends BasicView implements ActionListener {
         second_panel.add(menu);
 
 
-
-
         game = new BButton("START");
         game.setButton(GLOBAL.BUTTON_SIZE);
-        options = new BButton("OPCJE");
-        options.setButton(GLOBAL.BUTTON_SIZE);
         scores = new BButton("WYNIKI");
         scores.setButton(GLOBAL.BUTTON_SIZE);
         BButton exit = new BButton("WYJŚCIE");
@@ -65,24 +55,13 @@ public class MenuView extends BasicView implements ActionListener {
         menu.add(Box.createVerticalStrut(15));
         menu.add(game);
         menu.add(Box.createVerticalStrut(30));
-        menu.add(options);
-        menu.add(Box.createVerticalStrut(30));
         menu.add(scores);
         menu.add(Box.createVerticalStrut(30));
         menu.add(exit);
 
         game.addActionListener(this);
-        options.addActionListener(this);
         scores.addActionListener(this);
         exit.addActionListener(this);
-
-        loadSoundSettings();
-
-
-        soundPlayer = new SoundPlayer(getClass().getResourceAsStream("/sounds/tetris.wav"));
-        if(soundSettings.isMusicOn()){
-            soundPlayer.playContinoulsly();
-        }
 
 
     }
@@ -96,7 +75,7 @@ public class MenuView extends BasicView implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        g.drawImage(background,0,0,900,900,this);
+       g.drawImage(background,0,0,900,900,this);
 
     }
 
@@ -104,24 +83,13 @@ public class MenuView extends BasicView implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton)e.getSource();
 
-        if(soundSettings.isSoundOn()){
-            SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
-            soundPlayer2.playOnce();
-        }
-
 
         if(button == game){
 
             setVisible(false);
-            GameView new_game = new GameView(window,this,soundPlayer);
+            GameView new_game = new GameView(window,this);
 
             window.add(new_game);
-
-        }else if(button == options){
-
-            setVisible(false);
-            OptionsView new_options = new OptionsView(window,this, soundPlayer);
-            window.add(new_options);
 
         }else if(button == scores){
 
@@ -130,21 +98,9 @@ public class MenuView extends BasicView implements ActionListener {
             window.add(new_scores);
 
         }else{
-            soundPlayer.stop();
             window.dispose();
         }
 
     }
 
-    public void loadSoundSettings(){
-        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
-        System.out.println(jsonOperations);
-        soundSettings = new SoundSettings(jsonOperations);
-    }
-
-    @Override
-    public void setVisible(boolean aFlag) {
-        super.setVisible(aFlag);
-        loadSoundSettings();
-    }
 }

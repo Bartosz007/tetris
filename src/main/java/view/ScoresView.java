@@ -4,8 +4,6 @@ import builder.TableBuilder;
 import helper.gui.BBasicScrollBarUI;
 import helper.gui.BButton;
 import helper.file.JSONOperations;
-import helper.sound.SoundPlayer;
-import helper.sound.SoundSettings;
 import setting.GLOBAL;
 
 import javax.imageio.ImageIO;
@@ -81,14 +79,6 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
-        SoundSettings soundSettings = new SoundSettings(jsonOperations);
-        if(soundSettings.isSoundOn()){
-            SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
-            soundPlayer2.playOnce();
-        }
-
-
         this.setVisible(false);
         previous_menu.setVisible(true);
     }

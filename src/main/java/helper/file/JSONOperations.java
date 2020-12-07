@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class JSONOperations {
     private final String file;
@@ -92,44 +91,4 @@ public class JSONOperations {
 
     }
 
-    public void saveSoundSettings(boolean sound, boolean music){
-        try {
-            BufferedWriter pw = new BufferedWriter(new FileWriter(file));
-
-            JSONObject jsonObject;
-
-            jsonObject = new JSONObject();
-            jsonObject.put("sound", sound);
-            jsonObject.put("music", music);
-
-            pw.write(jsonObject.toJSONString());
-
-            pw.flush();
-            pw.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Nie odnaleziono pliku");
-        }
-    }
-
-    public String loadSoundSettings(){
-
-        try {
-
-            BufferedReader input = new BufferedReader(new FileReader(this.file));
-            String line = input.readLine();
-            input.close();
-            return line;
-
-        } catch (IOException e) {
-            System.out.println("Brak pliku/błąd czytania");
-            saveSoundSettings(true, true);
-            e.printStackTrace();
-        }
-
-
-        return "{\"music\":true,\"sound\":true}";
-
-    }
 }

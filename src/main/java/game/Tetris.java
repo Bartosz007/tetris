@@ -3,8 +3,6 @@ package game;
 
 import helper.file.JSONOperations;
 import helper.methods.PaintMethods;
-import helper.sound.SoundPlayer;
-import helper.sound.SoundSettings;
 import setting.GAME;
 import setting.GLOBAL;
 import setting.KEY;
@@ -25,8 +23,6 @@ public class Tetris extends JPanel {
     private final NextTetrimino nextTetrimino;
     private final GameView gameView;
     private final JFrame window;
-    private final SoundPlayer soundPlayer;
-    private final SoundSettings soundSettings;
     private final Timer timer;
     private final Score score;
 
@@ -35,11 +31,10 @@ public class Tetris extends JPanel {
     private long fallTime;
     private Tetrimino tetrimino;
 
-    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino, SoundPlayer soundPlayer) {
+    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino) {
         this.score = score;
         this.gameView = gameView;
         this.window = window;
-        this.soundPlayer = soundPlayer;
 
         this.paintMethods = new PaintMethods();
         this.speed = score.getSpeed().getValue();
@@ -55,8 +50,6 @@ public class Tetris extends JPanel {
 
         addKeyListeners();
 
-        JSONOperations jsonOperations = new JSONOperations(GLOBAL.SOUND_SETTINGS_PATH);
-        soundSettings = new SoundSettings(jsonOperations);
         nextFrameTime = System.currentTimeMillis() + fallTime;
         timer = new Timer(GAME.DELAY, e -> {
 
@@ -72,10 +65,6 @@ public class Tetris extends JPanel {
         if(nextFrameTime < System.currentTimeMillis()){
             if(tetrimino.isFelt(blocks)){
 
-                if(soundSettings.isSoundOn()){
-                    SoundPlayer soundPlayer2 = new SoundPlayer(getClass().getResourceAsStream("/sounds/button.wav"));
-                    soundPlayer2.playOnce();
-                }
 
                 for (Block block:tetrimino.getBlocks()) {
 
@@ -188,7 +177,6 @@ public class Tetris extends JPanel {
 
 
             timer.stop();
-            soundPlayer.stop();
 
             try {
                 Thread.sleep(1500);
