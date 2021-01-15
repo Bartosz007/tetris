@@ -31,7 +31,7 @@ public class ScoreBuilder{
         this.lvalue.setText(this.value+"");
     }
 
-    public JPanel buildPanel(){
+    public JPanel buildScore(){
         JPanel jpmain = new JPanel();
         jpmain.setLayout(new BoxLayout(jpmain,BoxLayout.PAGE_AXIS));
 

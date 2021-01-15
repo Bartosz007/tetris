@@ -21,17 +21,17 @@ public class Score {
 
     }
 
-    public JPanel buildScore(){
+    public JPanel build(){
         JPanel jp = new JPanel();
 
         jp.setLayout(new BoxLayout(jp,BoxLayout.PAGE_AXIS));
-        jp.add(score.buildPanel());
+        jp.add(score.buildScore());
         jp.add(Box.createVerticalStrut(20));
 
-        jp.add(lines.buildPanel());
+        jp.add(lines.buildScore());
         jp.add(Box.createVerticalStrut(20));
 
-        jp.add(speed.buildPanel());
+        jp.add(speed.buildScore());
 
         jp.setOpaque(false);
 

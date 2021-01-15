@@ -27,7 +27,7 @@ public class NextTetrimino extends JPanel {
         g2d.drawString("NASTĘPNY: ",40,20);
 
         for (Block b :tetrimino.getBlocks() ) {
-            paintMethods.paint_rect(g2d,b.getX()-150,b.getY()+40,b.getColor());
+            paintMethods.paintRect(g2d,b.getX()-150,b.getY()+40,b.getColor());
         }
 
         g2d.dispose();

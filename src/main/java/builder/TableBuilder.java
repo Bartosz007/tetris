@@ -18,11 +18,4 @@ public class TableBuilder {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "TableBuilder{" +
-                "score=" + score +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

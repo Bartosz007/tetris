@@ -20,25 +20,25 @@ import java.util.ArrayList;
 import static setting.GLOBAL.MAIN_MENU_BG;
 
 
-public class ScoresView extends BasicView implements ActionListener, MouseListener {
+public class ScoresView extends View implements ActionListener, MouseListener {
 
-    public ScoresView(JFrame window, JPanel previous_menu) {
-        super(window, previous_menu);
+    public ScoresView(JFrame window, JPanel previousMenu) {
+        super(window, previousMenu);
 
         setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
 
-        first_panel.setPreferredSize((new Dimension(250,900)));
-        first_panel.setMaximumSize(new Dimension(250,900));
-        first_panel.setOpaque(false);
+        firstPanel.setPreferredSize((new Dimension(250,900)));
+        firstPanel.setMaximumSize(new Dimension(250,900));
+        firstPanel.setOpaque(false);
 
-        second_panel.setPreferredSize((new Dimension(400,900)));
-        second_panel.setMaximumSize(new Dimension(400,900));
-        second_panel.setLayout(new BoxLayout(second_panel,BoxLayout.LINE_AXIS));
-        second_panel.setOpaque(false);
+        secondPanel.setPreferredSize((new Dimension(400,900)));
+        secondPanel.setMaximumSize(new Dimension(400,900));
+        secondPanel.setLayout(new BoxLayout(secondPanel,BoxLayout.LINE_AXIS));
+        secondPanel.setOpaque(false);
 
-        thrid_panel.setPreferredSize((new Dimension(250,900)));
-        thrid_panel.setMaximumSize(new Dimension(250,900));
-        thrid_panel.setOpaque(false);
+        thirdPanel.setPreferredSize((new Dimension(250,900)));
+        thirdPanel.setMaximumSize(new Dimension(250,900));
+        thirdPanel.setOpaque(false);
 
 
         JPanel table = new JPanel();
@@ -58,14 +58,14 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
 
         scrollPane.setVerticalScrollBar(jScrollBar);
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-        second_panel.add(scrollPane);
+        secondPanel.add(scrollPane);
 
 
         BButton back = new BButton("POWRÓT");
         back.setButton(new Dimension(200,100));
         back.setForeground(GLOBAL.MAIN_COLOR);
         back.addMouseListener(this);
-        first_panel.add(back);
+        firstPanel.add(back);
 
         back.addActionListener(this);
 
@@ -80,7 +80,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
     @Override
     public void actionPerformed(ActionEvent e) {
         this.setVisible(false);
-        previous_menu.setVisible(true);
+        previousView.setVisible(true);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class ScoresView extends BasicView implements ActionListener, MouseListen
         g.drawImage(background,0,0,900,900,this);
     }
 
-    void drawLine(JPanel panel, int i, TableBuilder tableBuilder){
+    private void drawLine(JPanel panel, int i, TableBuilder tableBuilder){
         JPanel row = new JPanel();
         row.setPreferredSize((new Dimension(360,60)));
         row.setMaximumSize(new Dimension(360,60));

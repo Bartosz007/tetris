@@ -16,45 +16,48 @@ public abstract class Tetrimino {
         }
     }
 
-    public void goleft(Block[][] play_board) {
+    public boolean goleft(Block[][] playBoard) {
 
         for (Block b:blocks){
             if(b.getX() == GAME.MIN_X)
-                return;
+                return false;
 
             if(b.getX()/GAME.SIZE > 0
-                && play_board[(b.getX()/GAME.SIZE)-1][b.getY()/GAME.SIZE]!=null)
-                return;
+                && playBoard[(b.getX()/GAME.SIZE)-1][b.getY()/GAME.SIZE]!=null)
+                return false;
 
         }
 
         for (Block b:blocks)
             b.setX(b.getX()-GAME.SIZE);
 
+        return true;
     }
 
-    public void goright(Block[][] play_board) {
+    public boolean goright(Block[][] play_board) {
 
         for (Block b:blocks) {
             if (b.getX() == GAME.MAX_X - GAME.SIZE)
-                return;
+                return false;
 
             if(b.getX()/GAME.SIZE < GAME.COLS
                     && play_board[(b.getX()/GAME.SIZE)+1][b.getY()/GAME.SIZE]!=null)
-                return;
+                return false;
         }
 
         for (Block b:blocks)
             b.setX(b.getX()+GAME.SIZE);
 
+        return true;
+
     }
 
-    public Boolean isFelt(Block[][] board_blocks) {
+    public Boolean isFelt(Block[][] boardBlocks) {
         for (Block b:blocks) {
             if(b.getY()>GAME.MAX_Y-2*GAME.SIZE)
                 return true;
 
-            if(board_blocks[b.getX()/GAME.SIZE][b.getY()/GAME.SIZE + 1] != null)
+            if(boardBlocks[b.getX()/GAME.SIZE][b.getY()/GAME.SIZE + 1] != null)
                 return true;
         }
 

@@ -17,13 +17,13 @@ import java.util.ArrayList;
 
 import static setting.GLOBAL.MAIN_MENU_BG;
 
-public class EndGameView extends BasicView implements ActionListener {
+public class EndGameView extends View implements ActionListener {
 
     private final int score;
-    private final JTextField player_value;
+    private final JTextField playerName;
 
-    public EndGameView(JFrame window, JPanel previous_menu, int score) {
-        super(window, previous_menu);
+    public EndGameView(JFrame window, JPanel previousMenu, int score) {
+        super(window, previousMenu);
 
         this.score = score;
 
@@ -31,50 +31,49 @@ public class EndGameView extends BasicView implements ActionListener {
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-        first_panel.setPreferredSize((new Dimension(270,900)));
-        first_panel.setMaximumSize(new Dimension(270,900));
-        first_panel.setOpaque(false);
+        firstPanel.setPreferredSize((new Dimension(270,900)));
+        firstPanel.setMaximumSize(new Dimension(270,900));
+        firstPanel.setOpaque(false);
 
-        second_panel.setPreferredSize((new Dimension(360,900)));
-        second_panel.setMaximumSize(new Dimension(360,900));
-        second_panel.setLayout(new BoxLayout(second_panel,BoxLayout.LINE_AXIS));
-        second_panel.setOpaque(false);
+        secondPanel.setPreferredSize((new Dimension(360,900)));
+        secondPanel.setMaximumSize(new Dimension(360,900));
+        secondPanel.setLayout(new BoxLayout(secondPanel,BoxLayout.LINE_AXIS));
+        secondPanel.setOpaque(false);
 
-        thrid_panel.setPreferredSize((new Dimension(270,900)));
-        thrid_panel.setMaximumSize(new Dimension(270,900));
-        thrid_panel.setOpaque(false);
+        thirdPanel.setPreferredSize((new Dimension(270,900)));
+        thirdPanel.setMaximumSize(new Dimension(270,900));
+        thirdPanel.setOpaque(false);
 
 
+        JPanel tableContainer = new JPanel();
+        tableContainer.setPreferredSize((new Dimension(360,80)));
+        tableContainer.setMaximumSize(new Dimension(360,80));
+        tableContainer.setLayout(new BoxLayout(tableContainer,BoxLayout.LINE_AXIS));
+        secondPanel.add(tableContainer);
 
-        JPanel table_container = new JPanel();
-        table_container.setPreferredSize((new Dimension(360,80)));
-        table_container.setMaximumSize(new Dimension(360,80));
-        table_container.setLayout(new BoxLayout(table_container,BoxLayout.LINE_AXIS));
-        second_panel.add(table_container);
-
-        table_container.setBackground(GLOBAL.SECONDARY_COLOR);
+        tableContainer.setBackground(GLOBAL.SECONDARY_COLOR);
 
         /*
           kolumna number
          */
 
-        JPanel number_col = new JPanel();
-        number_col.setPreferredSize((new Dimension(80,40)));
-        number_col.setMaximumSize(new Dimension(80,40));
-        table_container.add(number_col);
+        JPanel numberCol = new JPanel();
+        numberCol.setPreferredSize((new Dimension(80,40)));
+        numberCol.setMaximumSize(new Dimension(80,40));
+        tableContainer.add(numberCol);
 
-        JLabel first_value = new JLabel();
-        first_value.setFont(GLOBAL.PRIMARY_FONT);
-        first_value.setForeground(GLOBAL.MAIN_COLOR);
-        number_col.add(first_value);
+        JLabel firstValue = new JLabel();
+        firstValue.setFont(GLOBAL.PRIMARY_FONT);
+        firstValue.setForeground(GLOBAL.MAIN_COLOR);
+        numberCol.add(firstValue);
 
         ArrayList<TableBuilder> tableBuilders = jsonOperations.readFile();
 
-        first_value.setText(tableBuilders.size()+1+".");
+        firstValue.setText(tableBuilders.size()+1+".");
 
         for (int i = 0; i < tableBuilders.size(); i++) {
             if(tableBuilders.get(i).getScore() < this.score){
-                first_value.setText(i+1+".");
+                firstValue.setText(i+1+".");
                 break;
             }
         }
@@ -84,55 +83,55 @@ public class EndGameView extends BasicView implements ActionListener {
           kolumna score
          */
 
-        JPanel score_col = new JPanel();
-        score_col.setPreferredSize((new Dimension(170,40)));
-        score_col.setMaximumSize(new Dimension(170,40));
-        table_container.add(score_col);
+        JPanel scoreCol = new JPanel();
+        scoreCol.setPreferredSize((new Dimension(170,40)));
+        scoreCol.setMaximumSize(new Dimension(170,40));
+        tableContainer.add(scoreCol);
 
-        JLabel score_value = new JLabel(this.score+"");
-        score_value.setFont(GLOBAL.PRIMARY_FONT);
-        score_value.setForeground(GLOBAL.MAIN_COLOR);
-        score_col.add(score_value);
+        JLabel scoreValue = new JLabel(this.score+"");
+        scoreValue.setFont(GLOBAL.PRIMARY_FONT);
+        scoreValue.setForeground(GLOBAL.MAIN_COLOR);
+        scoreCol.add(scoreValue);
 
         /*
           kolumna player
          */
 
-        JPanel player_col = new JPanel();
-        player_col.setPreferredSize((new Dimension(200,40)));
-        player_col.setMaximumSize(new Dimension(200,40));
-        table_container.add(player_col);
+        JPanel playerCol = new JPanel();
+        playerCol.setPreferredSize((new Dimension(200,40)));
+        playerCol.setMaximumSize(new Dimension(200,40));
+        tableContainer.add(playerCol);
 
-        player_value = new JTextField("-nick-");
-        player_value.setFont(GLOBAL.PRIMARY_FONT);
-        player_value.setForeground(GLOBAL.MAIN_COLOR);
-        player_value.setPreferredSize((new Dimension(100,30)));
-        player_value.setMaximumSize(new Dimension(100,30));
-        player_value.setHorizontalAlignment(SwingConstants.CENTER);
-        player_value.setBackground(GLOBAL.SECONDARY_COLOR_BRIGHTER);
-        player_value.setBorder(BorderFactory.createLineBorder(null,0));
-        player_col.add(player_value);
+        playerName = new JTextField("-nick-");
+        playerName.setFont(GLOBAL.PRIMARY_FONT);
+        playerName.setForeground(GLOBAL.MAIN_COLOR);
+        playerName.setPreferredSize((new Dimension(100,30)));
+        playerName.setMaximumSize(new Dimension(100,30));
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerName.setBackground(GLOBAL.SECONDARY_COLOR_BRIGHTER);
+        playerName.setBorder(BorderFactory.createLineBorder(null,0));
+        playerCol.add(playerName);
 
         /*
 
           kolumna next
          */
 
-        JPanel next_col = new JPanel();
-        next_col.setPreferredSize((new Dimension(80,80)));
-        next_col.setMaximumSize(new Dimension(80,80));
-        next_col.setLayout(new BoxLayout(next_col,BoxLayout.LINE_AXIS));
-        table_container.add(next_col);
+        JPanel nextCol = new JPanel();
+        nextCol.setPreferredSize((new Dimension(80,80)));
+        nextCol.setMaximumSize(new Dimension(80,80));
+        nextCol.setLayout(new BoxLayout(nextCol,BoxLayout.LINE_AXIS));
+        tableContainer.add(nextCol);
 
         BButton next = new BButton("DALEJ");
         next.setPreferredSize((new Dimension(80,80)));
         next.setMaximumSize(new Dimension(80,80));
-        next_col.add(next);
+        nextCol.add(next);
 
-        number_col.setOpaque(false);
-        score_col.setOpaque(false);
-        player_col.setOpaque(false);
-        next_col.setOpaque(false);
+        numberCol.setOpaque(false);
+        scoreCol.setOpaque(false);
+        playerCol.setOpaque(false);
+        nextCol.setOpaque(false);
 
 
         next.addActionListener(this);
@@ -154,7 +153,7 @@ public class EndGameView extends BasicView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = player_value.getText();
+        String name = playerName.getText();
 
         if(name.equals(""))
             name = "NN";

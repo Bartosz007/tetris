@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class PaintMethods {
 
-    public void paint_rect(Graphics2D g2d, int x, int y, Color color){
+    public void paintRect(Graphics2D g2d, int x, int y, Color color){
 
         g2d.setColor(GLOBAL.SECONDARY_COLOR);
         g2d.setStroke(new BasicStroke(GLOBAL.BORDER));
@@ -20,25 +20,25 @@ public class PaintMethods {
                 GAME.SIZE- GLOBAL.BORDER,GAME.SIZE- GLOBAL.BORDER);
     }
 
-    public void paint_background(Graphics2D g2d){
+    public void paintBackground(Graphics2D g2d){
         for(int i =0;i<GAME.COLS;i++){
             for(int j =0;j<GAME.ROWS;j++){
-                paint_rect(g2d, i*GAME.SIZE,j*GAME.SIZE, GLOBAL.MAIN_COLOR);
+                paintRect(g2d, i*GAME.SIZE,j*GAME.SIZE, GLOBAL.MAIN_COLOR);
             }
         }
     }
 
-    public void paint_tetrimino(Graphics2D g2d, Tetrimino tetrimino){
+    public void paintTetrimino(Graphics2D g2d, Tetrimino tetrimino){
         for (Block block:tetrimino.getBlocks()) {
-            paint_rect(g2d, block.getX(),block.getY(),block.getColor());
+            paintRect(g2d, block.getX(),block.getY(),block.getColor());
         }
     }
 
-    public void paint_blocks(Graphics2D g2d, Block[][] blocks){
+    public void paintBlocks(Graphics2D g2d, Block[][] blocks){
         for (Block[] b: blocks) {
             for(Block block:b){
                 if(block!=null)
-                    paint_rect(g2d,block.getX(),block.getY(),block.getColor());
+                    paintRect(g2d,block.getX(),block.getY(),block.getColor());
             }
         }
 

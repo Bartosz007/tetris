@@ -1,10 +1,7 @@
 package game;
 
-
-import helper.file.JSONOperations;
 import helper.methods.PaintMethods;
 import setting.GAME;
-import setting.GLOBAL;
 import setting.KEY;
 import tetrimino.*;
 import view.EndGameView;
@@ -31,7 +28,7 @@ public class Tetris extends JPanel {
     private long fallTime;
     private Tetrimino tetrimino;
 
-    public Tetris(JFrame window, GameView gameView, Score score, JPanel next_tetrimino) {
+    public Tetris(JFrame window, GameView gameView, Score score, JPanel nextTetrimino) {
         this.score = score;
         this.gameView = gameView;
         this.window = window;
@@ -44,9 +41,9 @@ public class Tetris extends JPanel {
         blocks = new Block[GAME.COLS][GAME.ROWS];
 
         tetrimino = newTetrimino();
-        nextTetrimino = new NextTetrimino(newTetrimino());
+        this.nextTetrimino = new NextTetrimino(newTetrimino());
 
-        next_tetrimino.add(nextTetrimino);
+        nextTetrimino.add(this.nextTetrimino);
 
         addKeyListeners();
 
@@ -94,13 +91,13 @@ public class Tetris extends JPanel {
         Graphics2D g2d = (Graphics2D)g.create();
 
         //rysowanie tła
-        paintMethods.paint_background(g2d);
+        paintMethods.paintBackground(g2d);
 
         //rysowanie bloków
-        paintMethods.paint_blocks(g2d,blocks);
+        paintMethods.paintBlocks(g2d,blocks);
 
         //rysowanie tetrimino
-        paintMethods.paint_tetrimino(g2d,tetrimino);
+        paintMethods.paintTetrimino(g2d,tetrimino);
 
         //odświeżenie grafiki
         g2d.dispose();
@@ -194,7 +191,7 @@ public class Tetris extends JPanel {
 
 
 
-    void addKeyListeners(){
+    private void addKeyListeners(){
         int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
 
         getInputMap(IFW).put(KeyStroke.getKeyStroke("UP"), KEY.UP);

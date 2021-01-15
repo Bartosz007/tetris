@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static setting.GLOBAL.MAIN_MENU_BG;
 
-public class MenuView extends BasicView implements ActionListener {
+public class MenuView extends View implements ActionListener {
 
     private final BButton game;
     private final BButton scores;
@@ -23,25 +23,25 @@ public class MenuView extends BasicView implements ActionListener {
 
         setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
 
-        first_panel.setPreferredSize((new Dimension(270,900)));
-        first_panel.setMaximumSize(new Dimension(270,900));
-        first_panel.setOpaque(false);
+        firstPanel.setPreferredSize((new Dimension(270,900)));
+        firstPanel.setMaximumSize(new Dimension(270,900));
+        firstPanel.setOpaque(false);
 
-        second_panel.setPreferredSize((new Dimension(360,900)));
-        second_panel.setMaximumSize(new Dimension(360,900));
-        second_panel.setLayout(new BoxLayout(second_panel,BoxLayout.LINE_AXIS));
-        second_panel.setOpaque(false);
+        secondPanel.setPreferredSize((new Dimension(360,900)));
+        secondPanel.setMaximumSize(new Dimension(360,900));
+        secondPanel.setLayout(new BoxLayout(secondPanel,BoxLayout.LINE_AXIS));
+        secondPanel.setOpaque(false);
 
-        thrid_panel.setPreferredSize((new Dimension(270,900)));
-        thrid_panel.setMaximumSize(new Dimension(270,900));
-        thrid_panel.setOpaque(false);
+        thirdPanel.setPreferredSize((new Dimension(270,900)));
+        thirdPanel.setMaximumSize(new Dimension(270,900));
+        thirdPanel.setOpaque(false);
 
         JPanel menu = new JPanel();
         menu.setPreferredSize((new Dimension(360,400)));
         menu.setMaximumSize(new Dimension(360,400));
         menu.setLayout(new BoxLayout(menu,BoxLayout.PAGE_AXIS));
         menu.setOpaque(false);
-        second_panel.add(menu);
+        secondPanel.add(menu);
 
 
         game = new BButton("START");
@@ -63,7 +63,6 @@ public class MenuView extends BasicView implements ActionListener {
         scores.addActionListener(this);
         exit.addActionListener(this);
 
-
     }
 
     @Override
@@ -83,19 +82,17 @@ public class MenuView extends BasicView implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton)e.getSource();
 
-
         if(button == game){
 
             setVisible(false);
-            GameView new_game = new GameView(window,this);
-
-            window.add(new_game);
+            GameView newGame = new GameView(window,this);
+            window.add(newGame);
 
         }else if(button == scores){
 
             setVisible(false);
-            ScoresView new_scores = new ScoresView(window,this);
-            window.add(new_scores);
+            ScoresView newScores = new ScoresView(window,this);
+            window.add(newScores);
 
         }else{
             window.dispose();
